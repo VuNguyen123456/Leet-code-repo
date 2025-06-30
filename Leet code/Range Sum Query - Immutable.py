@@ -1,3 +1,5 @@
+# Use prefix Sum array to solve this problem
+
 class NumArray(object):
 
     def __init__(self, nums):
