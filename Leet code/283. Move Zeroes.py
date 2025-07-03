@@ -1,3 +1,4 @@
+# 2 pointers
 class Solution(object):
   def moveZeroes(self, nums):
       """
