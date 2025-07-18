@@ -12,14 +12,14 @@ class Solution(object):
         :type node: Node
         :rtype: Node
         """
-        oldToNew = {}
+        oldToNew = {} # A dictionary to map old node to the new created node
 
-        def dfs(node): # This is basically a cloone function???
-            if node in oldToNew:
+        def dfs(node): # A clone function
+            if node in oldToNew: # If the new node has been cloned then just return them to be able to put in the list of neighbors
                 return oldToNew[node]
-            copy = Node(node.val)
-            oldToNew[node] = copy
-            for neigh in node.neighbors:
+            copy = Node(node.val) # Clone the node (without neighbors for now)
+            oldToNew[node] = copy # Map old node to new
+            for neigh in node.neighbors: # Recursively clone all the neighbors and add them to the current clone's neighbors list
                 copy.neighbors.append(dfs(neigh))
             return copy
 
