@@ -1,32 +1,22 @@
-class Solution(object):
-  def topKFrequent(self, nums, k):
-      """
-      :type nums: List[int]
-      :type k: int
-      :rtype: List[int]
-      """
-      # On
-      dic = {}
-      for i in nums:
-          if i not in dic:
-              dic[i] = 1
-          else:
-              dic[i] += 1
-      # O (nlogk)
-      # Add the value of dic[nums] into minheap and do as a find top k largest ele
-      min_heap = []
-      for i in dic:
-          heapq.heappush(min_heap, [dic[i], i]) # dic[i] is the frequency: and it must be before i in this order [freq, i] because min heap is looking at the 1st element to compare 
-          # push before pop
-          if len(min_heap) > k: 
-              heapq.heappop(min_heap)
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        # Bucket sort
+        count = {} # This is a dict with purely to count n and it's count
+        freq = [[] for i in range(len(nums) + 1)] # this is the count and values list to bucketsort
 
-      # min heap now contain pair of number and it's sum where the frequency is in top k
+        # Gett the count:
+        for i in nums:
+            count[i] = 1 + count.get(i, 0) # Get the num as key and it's count as val
+        for n, c in count.items(): # To iterate over both key and it's value
+            # Get them into freq so row is the count of ele and col is array of all telement with that count
+            freq[c].append(n)
 
-      #O(k)
-      # Extract the number now:
-      result = []
-      for freq, num in min_heap:
-          result.append(num)
-      return result
-      # Same as this line: return [num for freq, num in min_heap]
+        # Get the return result
+        result = []
+        # Go backward because want top k not bottom k
+        for i in range(len(freq) - 1, 0, -1): #Ig nore count 0
+            # Get all the valu that has that amount of count
+            for j in freq[i]: # index is count s othis work
+                result.append(j)
+                if len(result) == k:
+                    return result
