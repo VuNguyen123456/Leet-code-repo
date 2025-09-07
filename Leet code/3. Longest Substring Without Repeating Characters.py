@@ -1,19 +1,15 @@
-#Sliding Window
-
-class Solution(object):
-  def lengthOfLongestSubstring(self, s):
-      """
-      :type s: str
-      :rtype: int
-      """
-      win = set()
-      biggest = 0
-      frontOfList = 0
-      for i in range(len(s)):
-          while s[i] in win:
-              win.remove(s[frontOfList])
-              frontOfList += 1
-          win.add(s[i])
-          biggest = max(len(win), biggest)
-      print(win)
-      return biggest
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        substring = set()
+        maxL = 0
+        count = 0
+        firstEleofWin = 0
+        for i in s:
+            while i in substring:
+                substring.remove(s[firstEleofWin])
+                count -= 1
+                firstEleofWin += 1
+            substring.add(i)
+            count += 1
+            maxL = max(maxL, count)
+        return maxL
